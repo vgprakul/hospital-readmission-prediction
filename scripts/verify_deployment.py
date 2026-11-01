@@ -33,10 +33,12 @@ def main():
     assert any(m.label == 'ROC-AUC' and m.value == '0.671' for m in at.metric)
     at.selectbox[0].set_value('race').run()
     assert not at.exception, at.exception
-    print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
+    result = {'status': 'passed', 'python': sys.version.split()[0],
                       'runtime_only': not (ROOT / 'data/raw/diabetic_data.csv').exists(),
                       'checks': ['frozen artifacts', 'prediction consistency', 'SHAP reconstruction',
-                                 'all three app pages', 'subgroup interaction']}, indent=2), flush=True)
+                                 'all three app pages', 'subgroup interaction']}
+    (ROOT / 'reports/deployment_verification.json').write_text(json.dumps(result, indent=2), encoding='utf-8')
+    print(json.dumps(result, indent=2), flush=True)
 
 
 if __name__ == '__main__':

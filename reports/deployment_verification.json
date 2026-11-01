@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "python": "3.13.2",
+  "runtime_only": true,
+  "checks": [
+    "frozen artifacts",
+    "prediction consistency",
+    "SHAP reconstruction",
+    "all three app pages",
+    "subgroup interaction"
+  ]
+}

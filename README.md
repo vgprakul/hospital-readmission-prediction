@@ -1,16 +1,82 @@
-# Hospital readmission prediction
+# Explainable 30-day hospital readmission prediction
 
 Predict recorded 30-day readmission following a hospital encounter involving a patient with diabetes, using information available at discharge.
 
-## Current milestone
+An end-to-end educational ML project with patient-separated evaluation, leakage-aware preprocessing, model comparison, calibration assessment, threshold selection, SHAP explanations, and an interactive Streamlit app.
 
-Dataset acquisition and initial understanding are complete. Open `notebooks/01_data_understanding.ipynb` for executed outputs, or `reports/initial_data_audit.md` for findings. `reports/column_inventory.csv` documents every column.
+## Run the application
+
+Use Python **3.13**. The small frozen model is included; downloading the dataset or retraining is not required to run the app.
+
+```bash
+python -m venv .venv
+# Windows PowerShell
+.venv/Scripts/python -m pip install -r app/requirements.txt
+.venv/Scripts/python -m streamlit run app/app.py --server.address 127.0.0.1
+```
+
+On Linux/macOS use `.venv/bin/python` for both commands. Open the localhost URL printed by Streamlit. The pages provide encounter prediction, live SHAP explanations, and held-out performance with calibration and demographic tables. Three ID-free training examples are provided; all 47 fields are editable.
+
+![Readmission predictor app](docs/screenshots/predictor.jpg)
+
+## Final held-out results
+
+The final model is histogram gradient boosting. It was selected by mean average precision in patient-grouped training cross-validation. The original probability output was retained because sigmoid calibration did not improve validation Brier score and log loss.
+
+| Metric | Final test result |
+|---|---:|
+| Encounters / patients | 14,862 / 10,497 |
+| Readmission prevalence | 11.30% |
+| ROC-AUC | 0.671 |
+| Average precision | 0.229 |
+| Recall | 69.58% |
+| Precision | 15.89% |
+| F1 | 0.259 |
+| Brier score | 0.09536 |
+| Encounters flagged | 49.52% |
+
+The fixed threshold **0.09737941008039629** targeted at least 70% recall on validation data. This educational objective catches many readmissions at the cost of a large alert workload: 6,190 false positives and 511 missed readmissions on test. It is not a validated clinical cutoff.
+
+![Final test discrimination and calibration](reports/final_test/test_evaluation.png)
+
+See [the final evaluation](reports/final_test/final_test_report.md), [patient-cluster confidence intervals](reports/final_test/patient_bootstrap_intervals.csv), and [demographic results](reports/final_test/test_subgroup_metrics.csv). The test set has been consumed; it must not guide further tuning.
+
+## Methodology
+
+- UCI diabetes encounter dataset: 101,766 raw encounters, 50 columns including identifiers and outcome.
+- Exclude death/hospice and unclear completed discharges; 99,319 eligible encounters from 69,980 patients remain. Transfers are retained.
+- Reserve approximately 70/15/15% of unique patients for training/validation/test. Patients never cross partitions.
+- Fit imputation, scaling, and categorical encoding inside each training fold. Admission/discharge codes are categorical.
+- Add previous-visit totals and medication activity/change counts; group diagnosis codes into broad categories.
+- Compare logistic regression, Random Forest, and gradient boosting on identical three-fold patient-separated training folds.
+- Assess training-only grouped sigmoid calibration; choose calibration and threshold on validation, then freeze all model artifacts before one final test scoring pass.
+- Explain predictions with exact tree SHAP in log-odds. Contributions reconstruct pipeline scores; they are associations, not causal effects.
+
+![Global SHAP explanations](reports/explainability/global_shap_importance.png)
+
+Detailed outputs: [data audit](reports/initial_data_audit.md), [cohort policy](reports/cohort_and_splits.md), [model comparison](reports/model_comparison/comparison_report.md), [calibration and demographic audit](reports/calibration/calibration_and_fairness_report.md), and [SHAP explanations](reports/explainability/explainability_report.md).
+
+## Data and target
+
+Open `notebooks/01_data_understanding.ipynb` for executed inspection outputs. `reports/column_inventory.csv` documents every raw column.
 
 Target: `<30` = 1; `>30` and `NO` = 0. Retain `patient_nbr` for patient-disjoint splitting, excluding identifiers and `readmitted` from predictors.
 
 ## Reproduce
 
 Install `requirements.txt`, download the archive using the URL in `data/raw/source.json` to `data/raw/uci_diabetes_130.zip`, then run `python scripts/understand_data.py` from the project root. This script executes inspection cells and writes a standard notebook with saved outputs; Jupyter is only needed for interactive notebook use.
+
+Subsequent scripts are documented below. Existing freezes and test-evaluation markers are intentionally protected. For new research, use a separate experiment directory and a new evaluation design; do not overwrite the existing final evaluation.
+
+## Deployment
+
+See [deployment instructions](deployment/README.md). Community Cloud entrypoint: **app/app.py**; Python: **3.13**. The pinned runtime requirements live beside the entrypoint at `app/requirements.txt` so deployment does not select the separate frozen training requirements.
+
+Generate an explicit runtime-only ZIP with `python scripts/package_deployment.py`. It contains the selected model, code, schema, and aggregate app reports; raw CSV data, unused models, encounter-level prediction files, secrets, and virtual environments are excluded. Only load trusted joblib artifacts. GitHub and hosting account access is required to publish; a local package is not a live deployment.
+
+## Scope and limitations
+
+Historical US diabetes records from 1999–2008 may not generalize to current care. The source does not establish complete cross-hospital follow-up or distinguish all planned readmissions. Missing data and retained transfers affect interpretation. Patient-separated testing does not provide temporal or hospital-level external validation. Demographic differences are descriptive and do not establish fairness. Almost half of encounters are flagged at the frozen threshold, with low positive predictive value. This app is educational, not clinically validated, and must not be used for medical decisions.
 
 ## Dataset attribution
 
@@ -42,7 +108,7 @@ See `reports/explainability/explainability_report.md` for SHAP findings and the 
 
 ## Local Streamlit demonstration
 
-Install app dependencies with `python -m pip install -r requirements-app.txt`. The original frozen `requirements.txt` is preserved. Run from the project root:
+Install pinned app dependencies with `python -m pip install -r app/requirements.txt`. The original frozen `requirements.txt` is preserved. Run from the project root:
 
 ```text
 python -m streamlit run app/app.py --server.address 127.0.0.1

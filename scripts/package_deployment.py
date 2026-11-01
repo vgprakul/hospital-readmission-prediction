@@ -12,6 +12,7 @@ def runtime_files():
              'requirements.txt', 'requirements-app.txt', 'models/frozen_manifest.json',
              'models/operating_policy.json', 'models/selected_engineered_model.joblib',
              'src/__init__.py', 'src/features.py', 'deployment/README.md',
+             'docs/screenshots/predictor.jpg',
              'scripts/verify_deployment.py']]
     paths += [p for p in (ROOT / 'app').rglob('*') if p.is_file() and '__pycache__' not in p.parts]
     # Include only aggregate artifacts that the app actually renders/downloads.
@@ -19,6 +20,9 @@ def runtime_files():
              'reports/final_test/test_metrics.json', 'reports/final_test/test_evaluation.png',
              'reports/final_test/test_subgroup_metrics.csv', 'reports/final_test/patient_bootstrap_intervals.csv',
              'reports/final_test/final_test_report.md']]
+    verification = ROOT / 'reports/deployment_verification.json'
+    if verification.exists():
+        paths.append(verification)
     return sorted(set(paths))
 
 
@@ -35,7 +39,7 @@ def main():
         for path in files:
             handle.write(path, path.relative_to(ROOT).as_posix())
         handle.writestr('deployment/runtime_inventory.json', json.dumps(inventory, indent=2))
-    print(f'Created {archive}: {len(files)} files, {archive.stat().st_size:,} bytes.')
+    print(f'Created dist/{archive.name}: {len(files)} files, {archive.stat().st_size:,} bytes.')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,9 @@
+{
+  "local_packaging": "complete",
+  "clean_environment_verification": "passed: Python 3.13.2 on Windows; runtime-only package",
+  "linux_ci": "configured, not yet executed remotely",
+  "frozen_model_files": "unchanged",
+  "github_publication": "pending authenticated connection and repository remote",
+  "streamlit_publication": "pending sign-in; hosting not deployed",
+  "runtime_archive": "dist/hospital-readmission-app.zip"
+}
