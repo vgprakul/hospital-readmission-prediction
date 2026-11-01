@@ -1,0 +1,9 @@
+code,description,reason,encounters
+9,Admitted as an inpatient to this hospital,not a completed discharge: admitted as inpatient,21
+12,Still patient or expected to return for outpatient services,not a clear completed discharge: still patient / expected outpatient return,3
+11,Expired,death,1642
+19,"Expired at home. Medicaid only, hospice.",death,8
+20,"Expired in a medical facility. Medicaid only, hospice.",death,2
+21,"Expired, place unknown. Medicaid only, hospice.",death,0
+13,Hospice / home,hospice,399
+14,Hospice / medical facility,hospice,372

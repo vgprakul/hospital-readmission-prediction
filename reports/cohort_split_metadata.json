@@ -1,0 +1,68 @@
+{
+  "seed": 42,
+  "method": "two-stage GroupShuffleSplit; 70/15/15 of patients approximately",
+  "source_sha256": "0689e7ec031237dc63031b938805c48377748761a3b26acab621567afa24df97",
+  "raw_encounters": 101766,
+  "excluded_encounters": 2447,
+  "eligible_encounters": 99319,
+  "eligible_patients": 69980,
+  "excluded_discharge_codes": {
+    "9": "not a completed discharge: admitted as inpatient",
+    "12": "not a clear completed discharge: still patient / expected outpatient return",
+    "11": "death",
+    "19": "death",
+    "20": "death",
+    "21": "death",
+    "13": "hospice",
+    "14": "hospice"
+  },
+  "coded_unknown_values": {
+    "admission_type_id": [
+      5,
+      6,
+      8
+    ],
+    "discharge_disposition_id": [
+      18,
+      25,
+      26
+    ],
+    "admission_source_id": [
+      9,
+      15,
+      17,
+      20,
+      21
+    ]
+  },
+  "patient_overlap": 0,
+  "partition_summary": [
+    {
+      "partition": "train",
+      "encounters": 69651,
+      "encounter_percent": 70.12857559983487,
+      "patients": 48986,
+      "patient_percent": 70.0,
+      "positive_count": 7973,
+      "readmission_percent": 11.447071829550186
+    },
+    {
+      "partition": "validation",
+      "encounters": 14806,
+      "encounter_percent": 14.907520212648134,
+      "patients": 10497,
+      "patient_percent": 15.0,
+      "positive_count": 1650,
+      "readmission_percent": 11.144130757800893
+    },
+    {
+      "partition": "test",
+      "encounters": 14862,
+      "encounter_percent": 14.963904187516992,
+      "patients": 10497,
+      "patient_percent": 15.0,
+      "positive_count": 1680,
+      "readmission_percent": 11.303996770286636
+    }
+  ]
+}

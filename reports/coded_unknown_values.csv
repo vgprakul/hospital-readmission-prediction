@@ -1,0 +1,12 @@
+column,code,description,eligible_encounters
+admission_type_id,5,Not Available,4614
+admission_type_id,6,NULL,5205
+admission_type_id,8,Not Mapped,320
+discharge_disposition_id,18,NULL,3691
+discharge_disposition_id,25,Not Mapped,989
+discharge_disposition_id,26,Unknown/Invalid,0
+admission_source_id,9,Not Available,125
+admission_source_id,15,Not Available,0
+admission_source_id,17,NULL,6570
+admission_source_id,20,Not Mapped,159
+admission_source_id,21,Unknown/Invalid,0

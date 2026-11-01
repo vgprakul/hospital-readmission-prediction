@@ -1,0 +1,13 @@
+{
+  "sklearn": "1.6.1",
+  "pandas": "2.2.3",
+  "numpy": "2.2.6",
+  "method": "sigmoid; ensemble=False; three-fold StratifiedGroupKFold; seed=42",
+  "training_encounters": 69651,
+  "training_patients": 48986,
+  "validation_encounters": 14806,
+  "test_evaluated": false,
+  "source_sha256": "0689e7ec031237dc63031b938805c48377748761a3b26acab621567afa24df97",
+  "assignments_sha256": "e83ba73f997de268859ba19cd3e44d1928d92098b0367bc34ac3b50765a91efe",
+  "base_model_sha256": "ddc4f40c4e07ade56402cdcd47f9cc5e5ea50b81c637fed170bc2cb62db27e43"
+}

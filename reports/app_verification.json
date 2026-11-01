@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "checks": [
+    "47 input fields",
+    "three examples match frozen pipeline",
+    "missing values and lab None preserved",
+    "invalid numerical inputs rejected",
+    "UI prediction matches pipeline",
+    "example loading and resubmission",
+    "explanation uses submitted encounter",
+    "SHAP reconstructs score",
+    "performance and subgroup pages render",
+    "all frozen file hashes unchanged"
+  ]
+}

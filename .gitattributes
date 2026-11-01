@@ -1,0 +1,8 @@
+* text=auto
+# Preserve the bytes covered by the pre-test frozen manifest across OS checkouts.
+requirements.txt -text
+src/*.py -text
+models/*.json -text
+models/*.joblib binary
+scripts/final_test_evaluation.py -text
+*.png binary
