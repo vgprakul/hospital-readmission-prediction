@@ -26,4 +26,8 @@ On Linux use `.venv-deploy/bin/python`. Run `python scripts/package_deployment.p
 
 ## Publication status
 
-Repository and hosting publication require an authenticated GitHub connection and Streamlit account. Local packaging or successful tests do not mean the app has been deployed. Record the actual repository and app URLs only after successful publication.
+Published application: https://prakul-readmission-explorer.streamlit.app/
+
+Public source: https://github.com/vgprakul/hospital-readmission-prediction
+
+Deployment: `main`, `app/app.py`, Python 3.13. Ubuntu CI passed, and the hosted app was checked for prediction, SHAP reconstruction, and final-performance rendering. The repository was made public because this free Streamlit workspace already contains its allowed private app. No existing app was changed. See `deployment/status.json` for the verification record.

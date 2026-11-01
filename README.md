@@ -4,6 +4,10 @@ Predict recorded 30-day readmission following a hospital encounter involving a p
 
 An end-to-end educational ML project with patient-separated evaluation, leakage-aware preprocessing, model comparison, calibration assessment, threshold selection, SHAP explanations, and an interactive Streamlit app.
 
+**Live demonstration:** https://prakul-readmission-explorer.streamlit.app/
+
+**Source repository:** https://github.com/vgprakul/hospital-readmission-prediction
+
 ## Run the application
 
 Use Python **3.13**. The small frozen model is included; downloading the dataset or retraining is not required to run the app.
@@ -122,6 +126,6 @@ Run `python scripts/check_streamlit_app.py` for automated interaction and frozen
 
 ## Next step
 
-Prepare repository documentation and deployment packaging. No public hosting or deployment has been performed by the local app workflow.
+The app is published at https://prakul-readmission-explorer.streamlit.app/ from this repository's `main` branch, entrypoint `app/app.py`, using Python 3.13. Ubuntu CI and hosted prediction/SHAP/performance checks passed. See `deployment/status.json` for publication details.
 
 This is an educational project using historical US data and is not validated for clinical use.
